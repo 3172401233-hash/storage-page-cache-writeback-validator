@@ -1,0 +1,19 @@
+{
+  "name": "页刷新竞争：旧刷新在 WAL 推进前落地",
+  "dirtyPages": [
+    { "id": "P1", "pageLsn": 200, "age": 30 }
+  ],
+  "wal": {
+    "records": [100, 200],
+    "initialDurableLsn": 0,
+    "durableLsn": 200
+  },
+  "walPersistencePoints": [
+    { "lsn": 100, "at": 1 },
+    { "lsn": 200, "at": 5 }
+  ],
+  "flushAttempts": [
+    { "id": "F1", "page": "P1", "startAt": 2, "endAt": 4 },
+    { "id": "F2", "page": "P1", "startAt": 3, "endAt": 6 }
+  ]
+}

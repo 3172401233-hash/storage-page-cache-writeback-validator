@@ -1,0 +1,17 @@
+{
+  "name": "storage-page-cache-writeback-validator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "description": "本地页缓存回写顺序 / WAL 依赖 / barrier / checkpoint / 崩溃恢复验证模型",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test",
+    "start": "node src/cli.js",
+    "demo": "node src/cli.js examples/tail-loss.json"
+  },
+  "license": "MIT"
+}

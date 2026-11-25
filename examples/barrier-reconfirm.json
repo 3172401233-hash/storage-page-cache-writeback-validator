@@ -1,0 +1,34 @@
+{
+  "name": "部分 barrier 成功后重新确认，checkpoint 记录安全页",
+  "dirtyPages": [
+    { "id": "P1", "pageLsn": 100, "age": 30, "device": "dev0" }
+  ],
+  "wal": {
+    "records": [{ "lsn": 100, "tx": "T1", "type": "commit" }],
+    "durableLsn": 100
+  },
+  "walPersistencePoints": [{ "lsn": 100, "at": 1 }],
+  "barriers": [
+    {
+      "id": "BW",
+      "at": 2,
+      "scope": "wal",
+      "targets": ["dev0", "dev1"],
+      "acks": ["dev0"],
+      "reconfirm": [{ "at": 3, "acks": ["dev0", "dev1"] }]
+    },
+    {
+      "id": "BD",
+      "at": 6,
+      "scope": "data",
+      "targets": ["dev0"],
+      "acks": ["dev0"]
+    }
+  ],
+  "flushAttempts": [
+    { "id": "F1", "page": "P1", "startAt": 4, "endAt": 5 }
+  ],
+  "checkpoints": [
+    { "id": "CP1", "at": 7, "pages": ["P1"] }
+  ]
+}

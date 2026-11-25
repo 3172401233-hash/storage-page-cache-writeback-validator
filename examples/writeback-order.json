@@ -1,0 +1,12 @@
+{
+  "name": "按脏页年龄回写 + WAL 门控",
+  "dirtyPages": [
+    { "id": "P-young", "pageLsn": 90, "age": 5 },
+    { "id": "P-old", "pageLsn": 200, "age": 120 },
+    { "id": "P-mid", "pageLsn": 150, "age": 60 }
+  ],
+  "wal": {
+    "records": [90, 120, 150, 180, 200],
+    "durableLsn": 150
+  }
+}

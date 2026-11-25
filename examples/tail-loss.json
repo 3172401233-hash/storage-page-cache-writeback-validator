@@ -1,0 +1,43 @@
+{
+  "name": "崩溃后 WAL 尾部缺失，部分数据页已先写入",
+  "dirtyPages": [
+    { "id": "PA", "pageLsn": 200, "age": 120 },
+    { "id": "PB", "pageLsn": 180, "age": 60 },
+    { "id": "PC", "pageLsn": 120, "age": 20, "diskLsn": 100 },
+    { "id": "PD", "pageLsn": 110, "age": 5 }
+  ],
+  "wal": {
+    "records": [
+      { "lsn": 100, "tx": "T1", "type": "begin" },
+      { "lsn": 120, "tx": "T1", "type": "commit" },
+      { "lsn": 150, "tx": "T2", "type": "begin" },
+      { "lsn": 180, "tx": "T2", "type": "commit" },
+      { "lsn": 200, "tx": "T3", "type": "commit" }
+    ],
+    "durableLsn": 200
+  },
+  "walPersistencePoints": [
+    { "lsn": 120, "at": 1 },
+    { "lsn": 200, "at": 5 }
+  ],
+  "barriers": [
+    { "id": "BW1", "at": 2, "scope": "wal", "targets": ["dev0"], "acks": ["dev0"] },
+    { "id": "BW2", "at": 6, "scope": "wal", "targets": ["dev0"], "acks": ["dev0"] },
+    { "id": "BD", "at": 8, "scope": "data", "targets": ["dev0"], "acks": ["dev0"] }
+  ],
+  "flushAttempts": [
+    { "id": "FD", "page": "PD", "startAt": 6, "endAt": 7 }
+  ],
+  "checkpoints": [
+    { "id": "CP1", "at": 9, "pages": ["PD"], "redoStartLsn": 100 }
+  ],
+  "crash": {
+    "at": 10,
+    "walTailLsn": 140,
+    "diskPages": {
+      "PA": { "diskLsn": 200 },
+      "PB": { "diskLsn": 180 },
+      "PD": { "diskLsn": 110 }
+    }
+  }
+}
